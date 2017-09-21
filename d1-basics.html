@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="d1-basics.js">
+		/*
+		lädt externe JS-Datei
+		Inhalt dieses script-Blocks wird überschrieben! Achtung!
+		*/
+	</script>
+	<script>
+	alert( 'Hallo' ); // öffnet Box mit Meldung, Script ist angehalten
+	console.log( 'Hallo Console!' ); // gibt Text in Webkonsole Browser aus
+	</script>
+	<style>
+	p {
+	  display:inline;
+	  margin:0;
+	  font:20px Arial;
+	}
+	#absatz { color:orange; }
+	#wort { cursor:pointer; } /* ändert Mauszeiger, damit User weiss er kann klicken */
+	</style>
+</head>
+<body>
+	<p id="absatz"><!-- id darf ich nur einmal verwenden im Dokument! -->
+	Hallo Welt!
+	</p>
+
+</body>
+</html>

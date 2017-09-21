@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+window.onload = function() {
+	document.getElementById( 'page-eingabe' ).style.display = 'block';
+
+	document.getElementById('btn-ausgabe').onclick = function() {
+		document.getElementById( 'page-eingabe' ).style.display = 'none';
+		document.getElementById( 'page-ausgabe' ).style.display = 'block';
+	}
+
+	document.getElementById('btn-eingabe').onclick = function() {
+		document.getElementById( 'page-ausgabe' ).style.display = 'none';
+		document.getElementById( 'page-eingabe' ).style.display = 'block';
+	}
+
+}
+	</script>
+	<style>
+	.page { display:none; width:600px; height:400px; border:1px solid #000; margin:50px;  }
+	</style>
+</head>
+<body>
+<section id="page-eingabe" class="page">
+	<button id="btn-ausgabe">ausgabe</button>
+</section>
+<section id="page-ausgabe" class="page">
+	<button id="btn-eingabe">eingabe</button>
+</section>
+
+</body>
+</html>

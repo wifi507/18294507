@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+window.onload = function() {
+	document.getElementById( 'btn' ).onclick = function( event ) {
+		// 1. Variablen
+		var zahl1, zahl2, summe, ausgabeText;
+
+		// 2. Eingabe
+		zahl1 = document.getElementById( 'z1' ).value * 1;
+		zahl2 = document.getElementById( 'z2' ).value * 1;
+		// 3. Verarbeitung
+		// Umwandeln String > Number
+		//zahl1 = parseFloat( zahl1 );
+		//zahl2 = parseFloat( zahl2 );
+		//zahl1 = zahl1 * 1;
+		//zahl2 = zahl2 - 0;
+		summe = zahl1 + zahl2;
+		// 4. Ausgabe
+
+		ausgabeText = zahl1;
+		ausgabeText += ' + ';
+		ausgabeText += zahl2;
+		ausgabeText += ' = ';
+		ausgabeText += '<b';
+		if ( summe < 0 ) {
+			ausgabeText += 'class="rot"';
+		}
+		ausgabeText += '>' + summe + '</b>';
+
+		document.getElementById( 'ausgabe' ).innerHTML = ausgabeText;
+		event.preventDefault(); // verhindert standardfunktion formular senden
+	} // btn.onclick
+} // onload
+	</script>
+	<style>
+	#ausgabe b { font-size:2em; }
+	.rot { color:red; }
+	</style>
+</head>
+<body>
+<h1>Addieren</h1>
+<form method="post" action="?">
+	Zahl1: <input type="text" id="z1"><br>
+	Zahl2: <input type="text" id="z2"><br>
+	<button id="btn">Summe berechnen</button>
+</form>
+<div id="ausgabe"></div>
+</body>
+</html>
