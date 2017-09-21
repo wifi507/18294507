@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+var getNumber = function( idElement ) {
+		var value;
+		value = e( idElement ).value;
+		value = value.replace( ',', '.' ) * 1;
+		return value;
+}
+var printNumber = function( number ) {
+	number = Math.round( number * 100 ) / 100;
+	number = number + ''; // number to String, number.toString()
+	number = number.replace( '.', ',' );
+	return number;
+}
+window.onload = function() {
+	var options;
+	options = '<option value="1">EUR</option>';
+	options += '<option value="1.2">USD</option>';
+	options += '<option value="1.17">CHF</option>';
+	e( 'waehrung1' ).innerHTML = options;
+	e( 'waehrung2' ).innerHTML = options;
+
+	// 2. Select soll Option USD aktiviert werden
+	e( 'waehrung2' ).getElementsByTagName( 'option' )[1].selected = true;
+
+	e( 'eingabe1' ).onkeyup = function( event )  {
+		var eingabe1, eingabe2, kurs = e('waehrung2').value / e('waehrung1').value;
+		eingabe1 = getNumber( 'eingabe1' );
+		e( 'eingabe2' ).value = printNumber( eingabe1 * kurs );
+	}
+}
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<form action="?" id="formular">
+	<input type="text" id="eingabe1">
+	<select id="waehrung1">
+	</select>
+	<input type="text" id="eingabe2">
+	<select id="waehrung2">
+	</select>
+	<button>umrechnen</button>
+</form>
+
+</body>
+</html>

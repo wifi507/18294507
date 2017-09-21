@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <script src="wifi.funktionen.js"></script>
+	<script>
+  window.onload = function() {
+    var i;
+    for ( i=1; i<=100; i++ ) {
+      // wiederholt sich
+      e( 'ausgabe' ).innerHTML += '<div>'+i+'</div>';
+    }
+  }
+
+	</script>
+	<style>
+  div > div {
+    display:inline-block; width:50px; height:50px; border:1px solid #000; margin:10px;
+  }
+
+  div:nth-child(2n) { background:#aaa; }
+
+	</style>
+</head>
+<body>
+<div id="ausgabe"></div>
+
+</body>
+</html>

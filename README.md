@@ -15,3 +15,19 @@
   *	document.getElementById
   *	HTMLNode.innerHTML
   *	HTMLNode.style
+-	Programmablaufplan (PAP)
+-	Struktogramm Nassi.Shneiderman-Diagramm
+
+Beispiele/Übungen
+- Zahlen addieren
+- Alter/Geschlecht
+
+### TAG2 (21.9.2017, C513)
+-	DOM
+-	JS Sprachkern
+  *	Funktionen
+  *	Schleifen
+
+Beispiele/Übungen
+- BMI-Rechner
+- Euro/Dollar Umrechner

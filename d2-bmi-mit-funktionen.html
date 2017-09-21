@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+
+var e = function( idElement ) {
+	return document.getElementById( idElement );
+}
+
+var checkEingabe = function( wert ) {
+	// wert muss > 0, darf nicht NaN sein
+	if ( wert < 1 || isNaN( wert ) == true ) {
+		return false;
+	} else {
+		return true;
+	}
+	// Rückgabe Ok (true/false)
+}
+
+var hideElement = function( idElement ) {
+	e( idElement ).className = 'page';
+	//document.getElementById( idElement ).style.display = 'none';
+}
+
+var showElement = function( idElement ) {
+	e( idElement ).className = 'page page-visible';
+	//document.getElementById( idElement ).style.display = 'block';
+}
+
+var changeElement = function( idElement, visible ) {
+	if ( visible ) {
+		showElement( idElement );
+	} else {
+		hideElement( idElement );
+	}
+}
+
+var changeToInputScreen = function() {
+	document.getElementById( 'feldCM' ).value = '';
+	document.getElementById( 'feldKG' ).value = '';
+	changeElement( 'page-eingabe', true );
+	changeElement( 'page-ausgabe', false );
+}
+
+window.onload = function() {
+	//changeElement( 'page-eingabe', true );
+	changeToInputScreen();
+
+	document.getElementById('btn-ausgabe').onclick = function( event ) {
+		event.preventDefault();
+
+		var groesseCM, gewichtKG, bm, posX = 53, posY = 42, ausgabe;
+
+		document.getElementById( 'feldCM' ).className = '';
+		document.getElementById( 'feldKG' ).className = '';
+
+		groesseCM = document.getElementById( 'feldCM' ).value * 1;
+		gewichtKG = document.getElementById( 'feldKG' ).value * 1;
+
+		// Überprüfe ob Eingaben fehlerhaft sind, kleiner 1 oder keine Zahl
+		if ( !checkEingabe( groesseCM ) || !checkEingabe( gewichtKG ) ) {
+			if ( !checkEingabe( groesseCM ) ) {
+				document.getElementById( 'feldCM' ).className = 'error';
+			}
+			if ( !checkEingabe( gewichtKG ) ) {
+				document.getElementById( 'feldKG' ).className = 'error';
+			}
+
+		} else {
+
+			// alles OK
+			bmi = gewichtKG / Math.pow( groesseCM/100 , 2);
+			bmi = Math.round( bmi*10 ) / 10; // auf eine Kommastelle runden
+
+			changeElement( 'page-eingabe', false );
+			changeElement( 'page-ausgabe', true );
+
+			ausgabe =  '<div id="grafik">';
+			ausgabe += '<img src="d2-res/bmi_tabelle.gif">';
+			ausgabe += '<span id="marker">X</span>';
+			ausgabe += '</div>';
+			ausgabe += 'Dein BMI ist: '+bmi;
+
+			document.getElementById( 'ausgabe' ).innerHTML = ausgabe;
+
+			posX += (groesseCM-160) * 10; // 1cm = 10px
+			posY += (gewichtKG-40) * 3; // 1kg = 3px
+			document.getElementById( 'marker' ).style.left = posX + 'px';
+			document.getElementById( 'marker' ).style.bottom = posY + 'px';
+		}
+
+	}
+
+	document.getElementById('btn-eingabe').onclick = changeToInputScreen;
+
+}
+/*
+	ELEMENT.Listener = Funktion
+*/
+	</script>
+	<style>
+	body, button, input {font:20px Arial; }
+	section.page-visible { display:block; }
+	.page { display:none; width:598px; height:398px; border:1px solid #000; margin:10px;
+		padding:1px; /* wegen collapsing margins! */
+	}
+	form { padding:50px; line-height:2; }
+	button { cursor:pointer; }
+
+	button::after { content:''; display:inline-block; width:0; height:0;
+		border-width:5px 0 5px 8px; border-style:solid; border-color:transparent;
+		border-left-color:black; margin-left:10px;
+	}
+
+	button:hover::after {
+		border-left-color:red;
+	}
+
+	.error {
+		background:red; color:white;
+	}
+
+	#grafik { margin:10px; position:relative; }
+	#marker { position:absolute; }
+
+	</style>
+</head>
+<body>
+<section id="page-eingabe" class="page">
+	<form action="?">
+		<input type="text" id="feldCM" autocomplete="off"> Größe (in cm)<br>
+		<input type="text" id="feldKG" autocomplete="off"> Gewicht (in kg)<br>
+		<button id="btn-ausgabe">BMI berechnen</button>
+	</form>
+</section>
+<section id="page-ausgabe" class="page">
+	<div id="ausgabe"></div>
+	<button id="btn-eingabe">Neue Werte eingeben</button>
+</section>
+
+</body>
+</html>
