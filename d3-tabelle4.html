@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+
+	var counter = 0;
+  var zahlen = [];
+  var lotto = [];
+	var alleZellen = [];
+
+
+	var zufallsZahl = function( von, bis ) {
+		var number;
+		number = Math.floor( Math.random() * (bis-von+1) ) + von;
+		return number;
+	}
+
+	var deleteValueFromArray = function( value ) {
+		/*var i;
+		for ( i=0; i<zahlen.length; i++ ) {
+			if ( zahlen[ i ] == value ) {
+				// Wert löschen und Ende
+				zahlen.splice( i, 1); // löscht den Wert an Stelle i
+				//return; // beendet Funktion
+				break; // beendet Schleife
+			}
+		}*/
+
+		zahlen.splice( zahlen.indexOf( value ), 1 );
+
+	}
+
+		//function zelleKlicken() { };
+	var starteZiehung = function() {
+		var neueZahl, i, alleZahlen = [];
+		alleZellen = e( 'ausgabe' ).getElementsByTagName( 'td' );
+		for ( i=1; i<=6; i++ ) {
+			neueZahl = zufallsZahl(1,45);
+			if ( alleZahlen.indexOf( neueZahl ) > -1 ) {
+				i--;
+				continue; //mach neuen Durchlauf in der Schleife
+			}
+			alleZahlen.push( neueZahl );
+			alleZellen[ neueZahl-1 ].style.color = 'red';
+		}
+		console.log( alleZahlen );
+
+	}
+
+	var btn;
+	var zelleKlicken = function() {
+
+		//this; // Element bei dem Event-Handler ausgelöst wurde
+		//alert( this.innerHTML );
+		if ( this.className == 'grau' ) {
+			if ( counter == 6 ){
+				e( 'ausgabe' ).removeChild( btn );
+			}
+			counter--;
+			deleteValueFromArray( this.innerHTML*1 );
+
+
+		} else if ( counter < 6 ) {
+			counter++;
+			zahlen.push( this.innerHTML*1 );
+			if ( counter == 6 ) {
+				btn = document.createElement( 'button' );
+				btn.innerHTML = 'Ziehung starten';
+				btn.onclick = starteZiehung;
+				e( 'ausgabe' ).appendChild( btn );
+			}
+		} else {
+			return;
+		}
+		this.setAttribute( 'class', this.className != 'grau' ? 'grau' : '' );
+		//this.className = 'grau';
+
+
+
+	}
+
+	window.onload = function() {
+
+		var html, i, table, tr, td;
+
+		table = document.createElement( 'table' );
+		table.setAttribute( 'border', 1);
+		e( 'ausgabe' ).appendChild( table );
+
+		for ( i=1; i<=45; i++ ) {
+			if ( i%6 == 1 ) {
+				tr = document.createElement( 'tr' );
+				table.appendChild( tr );
+			}
+			td = document.createElement( 'td' );
+			//alleZellen.push( td );
+			//td.setAttribute( 'id', 'zelle'+i );
+			td.onclick = zelleKlicken;
+			td.innerHTML = i;
+			tr.appendChild( td );
+		}
+
+
+		/*
+		html = '<table border="1">';
+		for ( i=1; i<=25; i++ ) { // Zeilen
+			if ( i%5 == 1 ) {
+				html += '<tr>';
+			}
+			html += '<td>'+ i +'</td>';
+			if ( i%5 == 0 ) {
+				html += '</tr>';
+			}
+		}
+
+		html += '</table>';
+		e( 'ausgabe' ).innerHTML = html;
+		*/
+
+	}
+
+	</script>
+	<style>
+	body{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+	.grau { background:#ddd; }
+	td { cursor:pointer; height:30px; width:30px;
+		vertical-align:middle; text-align:center; }
+	.marked { color:red; font-weight:bold; }
+	</style>
+</head>
+
+<body>
+<div id="ausgabe"></div>
+</body>
+</html>

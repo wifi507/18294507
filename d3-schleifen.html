@@ -22,12 +22,17 @@
 					html += '<div>'+i+'</div>';
 			} */
 
-				if ( i % 2 == 0 ) {
+				/*if ( i % 2 == 0 ) {
 						className = 'grau';
 				} else {
 						className = '';
-				}
+				}*/
+				/*
+				className = (i % 2 == 0) ? 'grau' : '';
 			  html += '<div class="' + className + '">' + i + '</div>';
+				*/
+
+				html += '<div class="' + (i % 2 == 0 ? 'grau' : '' ) + '">' + i + '</div>';
 
     }
 

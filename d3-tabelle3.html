@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+
+	var counter = 0;
+
+	//function zelleKlicken() { };
+	var zelleKlicken = function() {
+		//this; // Element bei dem Event-Handler ausgelöst wurde
+		//alert( this.innerHTML );
+		if ( this.className == 'grau' ) {
+			counter--;
+		} else if ( counter < 6 ) {
+			counter++;
+		} else {
+			return;
+		}
+		this.setAttribute( 'class', this.className != 'grau' ? 'grau' : '' );
+		//this.className = 'grau';
+	}
+
+	window.onload = function() {
+
+		var html, i, table, tr, td;
+
+		table = document.createElement( 'table' );
+		table.setAttribute( 'border', 1);
+		e( 'ausgabe' ).appendChild( table );
+
+		for ( i=1; i<=25; i++ ) {
+			if ( i%5 == 1 ) {
+				tr = document.createElement( 'tr' );
+				table.appendChild( tr );
+			}
+			td = document.createElement( 'td' );
+			//td.setAttribute( 'id', 'zelle'+i );
+			td.onclick = zelleKlicken;
+			td.innerHTML = i;
+			tr.appendChild( td );
+		}
+
+
+		/*
+		html = '<table border="1">';
+		for ( i=1; i<=25; i++ ) { // Zeilen
+			if ( i%5 == 1 ) {
+				html += '<tr>';
+			}
+			html += '<td>'+ i +'</td>';
+			if ( i%5 == 0 ) {
+				html += '</tr>';
+			}
+		}
+
+		html += '</table>';
+		e( 'ausgabe' ).innerHTML = html;
+		*/
+
+	}
+
+	</script>
+	<style>
+	body{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+	.grau { background:#ddd; }
+	td { cursor:pointer; height:30px; width:30px;
+		vertical-align:middle; text-align:center; }
+	</style>
+</head>
+
+<body>
+<div id="ausgabe"></div>
+</body>
+</html>

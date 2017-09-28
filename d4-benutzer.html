@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+var alleBenutzer = [];
+
+window.onload = function() {
+	e( 'saveForm' ).onsubmit = function( event ) {
+		event.preventDefault();
+		var neueBenutzer = {};
+		neueBenutzer.vorname = e('vn').value;
+		neueBenutzer.nachname =  e('nn').value;
+		neueBenutzer.email =  e('email').value;
+		alleBenutzer.push( neueBenutzer );
+		console.log( alleBenutzer );
+	}
+}
+
+
+	</script>
+	<style>
+html {
+	font-size:20px;
+}
+body {
+	background:#ccc;
+	padding:20px;
+
+}
+body, input, textarea, button, select {
+	font-family:Arial;
+}
+.page {
+	border:1px solid #000;
+	width:400px;
+	height:300px;
+  padding:20px;
+	background:#fff;
+	font-size:1.25em;
+	/*visibility:hidden;*/
+	display:none;
+	/*opacity:0.05;*/
+}
+
+#input {
+	/*visibility:visible;*/
+	display:block;
+	/*opacity:1;*/
+}
+
+button {
+	font-size:1.25rem;
+}
+nav ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+nav li {
+	/*display:inline-block;*/
+	float:left;
+	border:1px solid #000;
+	background:#666;
+	position:relative;
+	top:1px;
+}
+
+nav ul::after {
+	content:'';
+	display:block;
+	clear:left;
+}
+
+nav a {
+	text-decoration:none;
+	color:#000;
+	padding:10px 20px;
+	display:block;
+}
+nav li:hover {
+	background:#fff;
+	border-bottom-color:#fff;
+}
+
+label { width:180px; display:inline-block;}
+
+	</style>
+</head>
+<body>
+<nav>
+	<ul>
+		<li><a href="#" data-page="home">Home</a></li><li><a href="#" data-page="input">Eingabe</a></li><li><a href="#" data-page="output">Ausgabe</a></li>
+	</ul>
+</nav>
+<section class="page" id="home">
+
+	<h1>Hello Userverwaltung!</h1>
+
+</section>
+<section class="page" id="input">
+
+	<form action="?" method="post" id="saveForm">
+		<label>Vorname</label> <input type="text" id="vn"><br>
+		<label>Nachname</label> <input type="text" id="nn"><br>
+		<label>E-Mail-Adresse</label> <input type="text" id="email"><br>
+		<button>Speichern</button>
+	</form>
+
+</section>
+<section class="page" id="output"></section>
+
+
+</body>
+</html>

@@ -26,8 +26,28 @@ Beispiele/Übungen
 -	DOM
 -	JS Sprachkern
   *	Funktionen
-  *	Schleifen
+  *	Schleifen (Basis)
 
 Beispiele/Übungen
 - BMI-Rechner
 - Euro/Dollar Umrechner
+
+### TAG3 (27.9.2017, C513)
+-	DOM
+-	JS Sprachkern
+  *	Schleifen
+  * Array
+
+Beispiele/Übungen
+- Tabelle
+- Lotto
+
+### TAG3 (28.9.2017, C513)
+-	DOM
+-	JS Sprachkern
+  *	Objekte
+- CSS
+  * Selektoren
+
+Beispiele/Übungen
+- Benutzerveraltung

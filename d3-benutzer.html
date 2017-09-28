@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+var alleBenutzer = [];
+
+window.onload = function() {
+	e( 'saveForm' ).onsubmit = function( event ) {
+		event.preventDefault();
+		var neueBenutzer = [];
+		neueBenutzer['vorname'] = e('vn').value;
+		neueBenutzer['nachname'] =  e('nn').value;
+		neueBenutzer['email'] =  e('email').value;
+		alleBenutzer.push( neueBenutzer );
+		console.log( alleBenutzer );
+	}
+}
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<form action="?" method="post" id="saveForm">
+	Vorname <input type="text" id="vn"><br>
+	Nachname <input type="text" id="nn"><br>
+	E-Mail-Adresse <input type="text" id="email"><br>
+	<button>Speichern</button>
+</form>
+</body>
+</html>

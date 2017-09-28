@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="wifi.funktionen.js"></script>
+	<script>
+
+
+
+var alleBenutzer = [];
+
+var printMessage = function( text ) {
+	resetStatus();
+	var ausgabe = document.createElement( 'p' );
+	ausgabe.innerHTML = text;
+	ausgabe.id = 'status';
+	e('saveForm').appendChild( ausgabe );
+}
+
+var resetStatus = function() {
+	if ( e('status') )
+		e( 'saveForm' ).removeChild( e('status') );
+}
+
+var setFocusedLabel = function( input ) {
+	var allLabels = document.getElementsByTagName( 'label' );
+	var i;
+	for (i=0;i<allLabels.length;i++) {
+		allLabels[i].parentNode.className='';
+	}
+	input.parentNode.className = 'focused';
+}
+
+var focusEvent = function() {
+	resetStatus();
+	setFocusedLabel(this);
+	this.className = '';
+}
+
+var checkField = function( field ) {
+	if ( field.value == '' ) {
+		field.className = 'error';
+		return false;
+	} else if ( field.id == 'email' && field.value.indexOf('@') == -1 ) {
+		field.className = 'error';
+		return false
+	}
+	return true;
+}
+
+var blurEvent = function() {
+	checkField(this);
+}
+
+
+window.onload = function() {
+	e( 'saveForm' ).onsubmit = function( event ) {
+		event.preventDefault();
+		if ( !(checkField( e('vn') ) && checkField( e('nn') ) && checkField( e('email') ) ) ) {
+			printMessage( 'Fehler, da stimmt was nicht.' );
+			return;
+		}
+		var neueBenutzer = {};
+		neueBenutzer.vorname = e('vn').value;
+		neueBenutzer.nachname =  e('nn').value;
+		neueBenutzer.email =  e('email').value;
+		alleBenutzer.push( neueBenutzer );
+
+		printMessage( 'Benutzer gespeichert.' );
+		e('vn').value = e('nn').value = e('email').value = '';
+
+	}
+
+	//onblur
+	e( 'vn' ).onfocus = focusEvent;
+	e( 'nn' ).onfocus = focusEvent;
+	e( 'email' ).onfocus = focusEvent;
+	e( 'vn' ).onblur = blurEvent;
+	e( 'nn' ).onblur = blurEvent;
+	e( 'email' ).onblur = blurEvent;
+
+	setActivePage( 'home' );
+	document.getElementsByTagName( 'li' )[0].className = 'active';
+	setTabNavigation();
+}
+
+var removeAutoComplete = function() {
+	var allInputs = document.getElementsByTagName( 'input' );
+	var i;
+	for (i=0;i<allInputs.length;i++) {
+		allInputs[i].setAttribute( 'autocomplete', 'off');
+	}
+}
+
+var resetAllTabs = function() {
+	var i;
+	var allSections = document.getElementsByTagName( 'section' );
+	for (i=0; i<allSections.length; i++) {
+		allSections[i].style.display = '';
+	}
+	var allTabLIs = document.getElementsByTagName( 'li' );
+	for (i=0; i<allTabLIs.length; i++) {
+		allTabLIs[i].className = '';
+	}
+}
+
+var setActivePage = function( id ) {
+	resetAllTabs();
+	e( id ).style.display = 'block';
+}
+
+var setTabNavigation = function() {
+	var i;
+	var allTabLIs = document.getElementsByTagName( 'li' );
+	for (i=0; i<allTabLIs.length; i++) {
+		allTabLIs[i].onclick = function() {
+			var dataPage = this.getElementsByTagName('a')[0].getAttribute( 'data-page' );
+			setActivePage( dataPage );
+			this.className = 'active';
+		};
+	}
+
+}
+
+
+	</script>
+	<style>
+html {
+	font-size:20px;
+}
+body {
+	background:#ccc;
+	padding:20px;
+
+}
+body, input, textarea, button, select {
+	font-family:Arial;
+}
+.page {
+	border:1px solid #000;
+	width:400px;
+	height:300px;
+  padding:20px;
+	background:#fff;
+	font-size:1.25em;
+	display:none;
+}
+button {
+	font-size:1.25rem;
+}
+nav ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+nav li {
+	display:inline-block;
+	border:1px solid #000;
+	background:#666;
+	position:relative;
+	top:1px;
+}
+nav a {
+	text-decoration:none;
+	color:#000;
+	padding:10px 20px;
+	display:block;
+}
+nav li:hover,
+nav li.active {
+	background:#fff;
+	border-bottom-color:#fff;
+}
+
+label { display:inline-block; width:180px; color:#ddd; }
+
+.focused label { color:#000; }
+.error { background:red; }
+	</style>
+</head>
+<body>
+<nav id="tabnav">
+	<ul>
+		<li><a href="#" data-page="home">Home</a></li>
+		<li><a href="#" data-page="input">Eingabe</a></li>
+		<li><a href="#" data-page="output">Ausgabe</a></li>
+	</ul>
+</nav>
+<section class="page" id="home">
+
+	<h1>Hello Userverwaltung!</h1>
+
+</section>
+<section class="page" id="input">
+
+	<form action="?" method="post" id="saveForm">
+		<div><label>Vorname</label><input type="text" id="vn"></div>
+		<div><label>Nachname</label><input type="text" id="nn"></div>
+		<div><label>E-Mail-Adresse</label><input type="text" id="email"></div>
+		<button>Speichern</button>
+	</form>
+
+</section>
+<section class="page" id="output"></section>
+
+
+</body>
+</html>
