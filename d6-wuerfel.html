@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+;(function() {
+	"use strict";
+	var cubes = [0,0,0,0,0];
+	var randy = function(a,b) { return Math.floor( Math.random()*(b-a+1))+a; }
+	$(document).ready(function() {
+
+		$( '#btn' ).click( function() {
+			var i, nr, div = $('<div>').appendTo( '#ausgabe' );
+			for (i in cubes ) {
+				nr =  cubes[i] == 0 ? randy(1,6) : cubes[i];
+				$( '<img>' )
+					.attr('src','d2-res/wuerfel/wuerfel'+nr+'cols5.jpg')
+					.appendTo( div );
+			}
+		});
+
+	});
+}());
+	</script>
+	<style>
+	div > div { padding:20px; border-bottom:1px solid #ccc; }
+	div > div > img { margin:5px; }
+	button { font-size:3em; }
+	</style>
+</head>
+<body>
+<button id="btn">würfeln</button>
+<div id="ausgabe">
+</div>
+</body>
+</html>
