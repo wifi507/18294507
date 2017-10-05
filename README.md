@@ -62,7 +62,7 @@ Beispiele/Übungen
 - Benutzerverwaltung jQuery
 - Navigation mit Submenü und click
 
-
+## T2. Programmieren mit Javascript - Aufbau
 ### TAG6 (5.10.2017, C513)
 -	JS Sprachkern
   * Funktionen (Rekursion, Closure, Methode, IIFE)
