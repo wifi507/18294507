@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+
+var tuwas = function( a ) {
+	console.log( a );
+	return a*a;
+}
+var x = tuwas( 2 );
+
+window.onload = function() {
+
+	//document.getElementById('btn').onclick = tuwas;
+	//$( '#btn' ).click( tuwas )
+
+
+}
+
+// Callback
+var x2 = function( a, b ) {
+	var z = a*a;
+	b( z );
+}
+//x2(2,function( y ){ alert(y); });
+x2(3,function( g ) {console.log( g ); });
+x2(4,console.log);
+
+//iife
+var i = 1;
+var j = 2;
+window.f = 5;
+
+(function() {
+	'use strict';
+	var j = 1;
+
+	console.log( j );
+	console.log( window.j );
+
+	//...
+}());
+
+$( document ).ready( function() {
+
+	var i;
+	for (i=1;i<=10;i++) {
+		(function(i){
+			//var i_intern = i;
+		$( '<a href="#" style="margin:0 10px;">' )
+			.html('X')
+			//.attr( 'data-i', i)
+			.click( function() {
+					//alert( $(this).attr('data-i') );
+					//alert( this.i );
+					alert(i);
+			})
+			.appendTo( 'body' );
+		}(i));
+   	//hyperlink[0].i = i;
+
+	} // for ende
+
+
+});
+
+// Closure
+var multiply = function( a ) {
+	return function( b ) { return a*b; };
+}
+
+var m5 = multiply(5);
+var ergebnis = m5(3);
+alert( multiply(2)(3) );
+
+// recursive
+$( document ).ready( function() {
+
+	var i=10;
+
+	var count = function() {
+		$( '#countdown' ).html( i );
+		i--;
+		if ( i>=0 ) //count();
+			setTimeout( count, 1000 );
+	}
+	count();
+
+});
+
+// Methode
+var p = {
+	a:5,
+	b:7,
+	m:function() {
+		return this.a * this.b;
+	}
+};
+/*
+p.m = function() {
+	return this.a * this.b;
+}
+*/
+
+
+alert( p.m() );
+
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<button id="btn">Klick mich</button>
+<div id="countdown"></div>
+</body>
+</html>

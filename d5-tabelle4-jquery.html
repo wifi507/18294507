@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready( function() {
+	var i, tr, table = $( '<table border="1">' ).appendTo( '#ausgabe' );
+	for ( i=1; i<=45; i++ ) {
+		if ( i%6 == 1 ) {
+			tr = $( '<tr>' ).appendTo( table );
+		}
+		$( '<td>' )
+			.html( i )
+			.click(function() {
+				if ( $( '.grau' ).length < 6 || $(this).hasClass( 'grau' ) ) {
+					$(this).toggleClass( 'grau' );
+				}
+			})
+			.appendTo( tr );
+	}
+
+
+});
+	</script>
+	<style>
+	body{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+	.grau { background:#ddd; }
+	td { cursor:pointer; height:30px; width:30px;
+		vertical-align:middle; text-align:center; }
+	.marked { color:red; font-weight:bold; }
+	</style>
+</head>
+
+<body>
+<div id="ausgabe"></div>
+</body>
+</html>

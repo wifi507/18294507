@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+
+var alleBenutzer = [];
+
+$( document).ready( function() {
+	$( '#saveForm' ).submit( function( event ) {
+		event.preventDefault();
+		//reset old errors
+		$( '.error' ).removeClass( 'error' );
+
+		// checkInput
+		checkInputs('vn');
+		checkInputs('nn');
+		checkInputs('email');
+
+		if ( $( '.error' ).length > 0 ) {
+			return;
+		}
+
+		var neueBenutzer = {};
+		neueBenutzer.vorname = $('#vn').val();
+		neueBenutzer.nachname =  $('#nn').val();
+		neueBenutzer.email =  $('#email').val();
+		alleBenutzer.push( neueBenutzer );
+
+		resetStatus();
+
+		$( '<p>' )
+			.html( 'Benutzer gespeichert.' )
+			.attr( 'id', 'status' )
+			.appendTo( this );
+
+	  $( '#vn, #nn, #email' ).val('');
+
+	});
+
+	$( '#vn, #nn, #email' )
+		.val('')
+		.focus( resetStatus )
+		//.blur(checkInput);
+
+	setActivePage( 'home' );
+	$( 'li:first-child' ).addClass( 'active' );
+	setTabNavigation();
+});
+
+var checkInput = function() {
+	checkInputs( $(this).attr('id') );
+}
+
+var checkInputs = function( id ) {
+	switch( id ) {
+		case 'email':
+			if ( $('#email').val().indexOf( '@') == -1 ) {
+				$('#email').addClass( 'error ');
+			}
+		break;
+		default:
+			if ( $('#'+id).val() == '' ) {
+				$('#'+id).addClass( 'error ');
+			}
+	}
+}
+
+var resetStatus = function() {
+	$(this).removeClass('error');
+	if ( $('#status').length > 0 )
+		$( '#status').remove();
+}
+
+var resetAllTabs = function() {
+	$( 'section' ).hide();
+	$( 'li' ).removeClass( 'active' );
+}
+
+var setActivePage = function( id ) {
+	resetAllTabs();
+	$( '#'+id ).show();
+	if ( id == 'output' ) userTable();
+}
+
+var setTabNavigation = function() {
+	$( 'li' ).click( function() {
+		var dataPage = $(this).find('a').attr( 'data-page' );
+		setActivePage( dataPage );
+		$(this).addClass( 'active' );
+	})
+}
+
+var userTable = function() {
+	var i, tr, table;
+	$( '#output' ).empty();
+
+	table = $( '<table border="1">' ).appendTo( '#output' );
+	tr = $( '<tr>' ).appendTo( table );
+	$( '<th>Vorname</th><th>Nachname</th><th>E-Mail</th>' ).appendTo( tr );
+	for (i in alleBenutzer ) {
+		tr = $( '<tr>' ).appendTo( table );
+		$( '<td>' ).html( alleBenutzer[i].vorname ).appendTo( tr );
+		$( '<td>' ).html( alleBenutzer[i].nachname ).appendTo( tr );
+		$( '<td>' ).html( alleBenutzer[i].email ).appendTo( tr );
+	}
+
+
+
+}
+
+	</script>
+	<style>
+html {
+	font-size:20px;
+}
+body {
+	background:#ccc;
+	padding:20px;
+
+}
+body, input, textarea, button, select {
+	font-family:Arial;
+}
+.page {
+	border:1px solid #000;
+	width:400px;
+	height:300px;
+  padding:20px;
+	background:#fff;
+	font-size:1.25em;
+	display:none;
+}
+button {
+	font-size:1.25rem;
+}
+nav ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+nav li {
+	display:inline-block;
+	border:1px solid #000;
+	background:#666;
+	position:relative;
+	top:1px;
+}
+nav a {
+	text-decoration:none;
+	color:#000;
+	padding:10px 20px;
+	display:block;
+}
+nav li:hover,
+nav li.active {
+	background:#fff;
+	border-bottom-color:#fff;
+}
+
+.error {
+	background:red;
+	color:#fff;
+}
+	</style>
+</head>
+<body>
+<nav id="tabnav">
+	<ul>
+		<li><a href="#" data-page="home">Home</a></li>
+		<li><a href="#" data-page="input">Eingabe</a></li>
+		<li><a href="#" data-page="output">Ausgabe</a></li>
+	</ul>
+</nav>
+<section class="page" id="home">
+
+	<h1>Hello Userverwaltung!</h1>
+
+</section>
+<section class="page" id="input">
+
+	<form action="?" method="post" id="saveForm">
+		Vorname <input type="text" id="vn"><br>
+		Nachname <input type="text" id="nn"><br>
+		E-Mail-Adresse <input type="text" id="email"><br>
+		<button>Speichern</button>
+	</form>
+
+</section>
+<section class="page" id="output"></section>
+
+
+</body>
+</html>

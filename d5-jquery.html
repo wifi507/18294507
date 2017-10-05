@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<!--<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>-->
+  <script src="jquery-3.2.1.min.js"></script>
+	<script>
+	//console.log( jQuery, $ );
+
+	// $(...) => jQuery-Objekt
+
+	// $( CSS-Selektor als String )
+	// $( HTML-NodeElement )
+
+  //
+
+//window.onload = function() {
+$( document ).ready( function() {
+
+	console.log( document.getElementById( 'absatz' ) );
+	console.log( $( '#absatz' )[0] );
+	console.log( $( document.getElementById('absatz') )[0]  );
+
+  //document.getElementById( 'absatz' ).innerHTML = 'neuer Inhalt.';
+	//$( '#absatz' )[0].innerHTML = 'neuer Inhalt.';
+	$( '#absatz' ).html( 'neuer Inhalt mit jQuery.');
+
+	console.log( $( '.absatz').length );
+	$( '.absatz' )[0].innerHTML = 'A1';
+	$( '.absatz' )[1].innerHTML = 'A2';
+
+	$( '.absatz' ).html( 'Das ist der neue Inhalt!!!' );
+
+	$( '.absatz' ).eq(1).html( 'nur zweiter' );
+	$( 'p' ).eq(2).html( 'nur drittter' );
+
+	$( 'p.absatz + p:not(.absatz)' ).html( 'welcher wirds?' );
+
+	$( 'p' ).css( 'font-size', '24px' );
+	$( 'p:nth-child(2n+1)' ).css( 'color', 'red' );
+
+	$( 'p' ).css( {
+		'font-size':'24px',
+		color:'red',
+		backgroundColor:'#ccc',
+		width:'200px'
+	} );
+
+  $( 'p' ).addClass( 'gruen' );
+	$( 'p' ).addClass( 'arial' );
+
+	$( 'p' ).removeClass( 'absatz' );
+
+	//$( '#absatz' ).html( 'Hallo Welt!' );
+
+	/*$( 'p' ).click( function() {
+		//$( this ).toggleClass( 'gruen' );
+		$( 'p' ).show();
+		$( this ).hide();
+	});*/
+
+
+	// method-chaining
+	$( 'p' )
+		.css({border:'1px solid #000'})
+		.html( 'SU<b>P</b>ER' )
+		.click(function() {
+			$( 'p' ).show();
+			$( this ).hide();
+		})
+		.mouseover(function(){
+			$(this).css({background:'transparent'})
+		});
+
+ // $( ... ) => jQuery Objekte
+ // jQueryMethode .html( ) => jQuery Objekt
+
+	// transparente jQuery Methode => Rückgabe selbes Objekt
+	/*
+		.html()
+		.css()
+		.addClass()
+	*/
+
+	// destruktive jQuery Methode => Rückgabe jQuery Objekt
+	// aber anderer Inhalt
+
+	$( 'p' ).find( 'b' ).css({color:'red'});
+
+	// terminierende jQuery Methode => liefert kein jQuery Objekt
+	// $( 'p' ).get(0).html( 'test' );
+
+	var eingabe = $( 'input' ).val(); // wie .value
+
+
+	// erzeuge neue DOM Elemente
+
+	//document.createElement( 'div' )
+
+	$( '<div>' )
+		.html( 'alles neu' )
+		.addClass( 'arial')
+		.appendTo( 'body' );
+
+	$( '<div>' )
+		.html( 'alles neu am Anfang' )
+		.addClass( 'arial')
+		.prependTo( 'p' );
+
+});
+
+	</script>
+	<style>
+
+.gruen {
+	color:green !important;
+}
+.arial {
+	font-family:Arial;
+}
+	</style>
+</head>
+<body>
+		<p class="absatz" id="absatz">Das ist ein Absatz.</p>
+		<p class="absatz">2. Absatz</p>
+		<p>3. Absatz</p>
+		Gib was ein: <input type="text"><button>Klick mich</button>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+var a = [1,2,3];
+var i;
+for ( i =0; i<a.length; i++ ) {
+	console.log( i, a[i] );
+}
+
+var o = {a:1,b:2};
+o = {};
+o.a = 1; // o['a']
+o.b = 2; // o['b']
+
+for ( i in o ) {
+	console.log( i, o[i] );
+}
+console.log( '---' );
+
+for ( i in a ) {
+	console.log( a[i] );
+}
+for ( i of a ) { // ES6
+	console.log( i );
+}
+
+console.log( '---' );
+a = [];
+
+do {
+	a.splice(0,1);
+	console.log( a );
+} while( a.length > 0 );
+
+console.log( '---' );
+
+a = [1,2,3];
+while ( a.length > 0 ) {
+	a.splice(0,1);
+	console.log( a );
+}
+
+window.onload = function() {
+	document.getElementById( 'btn' ).onclick = function(e) {
+		e.preventDefault();
+		var zahl = document.getElementById( 'zahl' ).value * 1;
+		var counter = 0;
+		var ausgabe = 'Ihre Zahl ' + zahl + ' ist ';
+		while ( zahl%2 == 0 && zahl > 0 ) {
+			counter++;
+			zahl /= 2; // zahl = zahl / 2;
+		}
+		document.getElementById( 'ausgabe' ).innerHTML = ausgabe+counter +' Mal durch 2 teilbar!';
+
+
+	} // onclick
+
+
+} // onload
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<input type="text" id="zahl"><button id="btn">check</button>
+<div id="ausgabe"></div>
+
+</body>
+</html>

@@ -42,7 +42,7 @@ Beispiele/Übungen
 - Tabelle
 - Lotto
 
-### TAG3 (28.9.2017, C513)
+### TAG4 (28.9.2017, C513)
 -	DOM
 -	JS Sprachkern
   *	Objekte
@@ -50,4 +50,28 @@ Beispiele/Übungen
   * Selektoren
 
 Beispiele/Übungen
-- Benutzerveraltung
+- Benutzerverwaltung
+
+### TAG5 (4.10.2017, C513)
+-	JS Sprachkern
+  *	Schleifen (for, for in, do while, while, for of)
+- jQuery
+  * Basis
+
+Beispiele/Übungen
+- Benutzerverwaltung jQuery
+- Navigation mit Submenü und click
+
+
+### TAG6 (5.10.2017, C513)
+-	JS Sprachkern
+  * Funktionen (Rekursion, Closure, Methode, IIFE)
+- jQuery
+  * Wiederholung
+  * jQuery Plugin
+- Sonstiges
+  * Einrichtung github.com
+
+Beispiele/Übungen
+- jQuery Plugins
+- Würfelspiel

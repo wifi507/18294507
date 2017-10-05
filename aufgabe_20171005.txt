@@ -1,0 +1,21 @@
+1) Benutzerverwaltung
+Beispiel aus dem Kurs fertigstellen
+- Eingabefehler abfangen
+- Ausgabe der Daten in einer Tabelle
+(Lösung: d5-benutzer-jquery.html)
+
+Zusatzaufgaben:
+- Benutzer löschen
+- Benutzer editieren
+
+2) Newsticker (Übung3 - Praxis/Prüfung)
+Es gilt ein jQuery-Newsticker-Plugin zu entwickeln.
+$( 'selektor' ).newsticker();
+
+Der Inhalt der selektierten Elemente wird zu einer "Laufschrift"
+(=Newsticker). Der Text läuft von rechts nach links, sobald er
+komplett durchgelaufen ist, erscheint er wieder rechts.
+
+Zusatzaufgabe:
+- bei Mausover hält die Laufschrift an
+- Optionen zur Formatierung (Breite, Geschwindigkeit, Anzahl Durchläufe)

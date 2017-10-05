@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="jquery-meinplugin.js"></script>
+	<script src="jquery-formatnumbers2.js"></script>
+	<script>
+$( document ).ready( function() {
+
+	//$( 'p:last-child' ).red().html('Test');
+	//$( 'p' ).colorize({g:255,b:255});
+//	$( 'p:last-child' ).colorize();
+	$( 'p' ).formatNumbers();
+
+});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<p>Absatz 1: Das ist Text. Manchmal kommen Zahlen wie 12345 vor.</p>
+<p>Absatz 2: Hier kommt ein <b>Tag</b> mit einem Attribute,
+	Achtung:<span style="width:100px; display:block;">Das ist 1 DIV mit einer Breite von 100px</span></p>
+<p>Absatz 3</p>
+</body>
+</html>
