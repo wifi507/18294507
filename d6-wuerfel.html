@@ -17,7 +17,10 @@
 				nr =  cubes[i] == 0 ? randy(1,6) : cubes[i];
 				$( '<img>' )
 					.attr('src','d2-res/wuerfel/wuerfel'+nr+'cols5.jpg')
-					.appendTo( div );
+					.appendTo( div )
+					.click(function() {
+
+					});
 			}
 		});
 

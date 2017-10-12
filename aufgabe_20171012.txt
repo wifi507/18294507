@@ -1,0 +1,16 @@
+1) PLZ
+Fertigstellen des Beispieles Postleitzahlen.
+- Feld PLZ Eingabe
+- Daneben erscheint Ort oder Auswahl mit Orten
+
+
+2) Aktuelle News (Übung4 - Praxis/Prüfung)
+Ausgaben der aktuellen Newsmeldungen
+http://wifi.1av.at/507/news.php > liefert HTML aus dem man sich Meldungen herauslesen kann.
+Die Meldungen erscheinen in der Seite als Liste
+Jede Minute ein Refresh der Meldungen
+
+Zusatzaufgabe:
+- die Meldungen erscheinen in einem Newsticker
+- beim Refresh der Meldungen werden neue Meldungen erkannt und im UI hervorgehoben
+ (zB gelb hinterlegt)

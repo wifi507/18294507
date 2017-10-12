@@ -1,0 +1,12 @@
+FLAGGEN SCHNITTSTELLE (Webservice)
+
+http://wifi.1av.at/507/getflag.php
+
+Request > POST x-www-urlencoded
+- currency [STR{3}]
+
+Response ERROR > JSON application/json
+- error [STRING]
+
+Response SUCCESS > JSON application/json
+- flag [STRING/URL]

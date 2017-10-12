@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+;(function() {
+	"use strict";
+	var getECB = function() {
+		$( '#eingabe,#currency' ).val('');
+		$.ajax({
+			//url:'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml',
+			url:'http://wifi.1av.at/507/ecb.php',
+			method:'GET',
+			dataType:'xml',
+			success:function(data) {
+				//var xml = $.parseXML( data );
+				var xml = data;
+				$( 'Cube > Cube > Cube', xml ).each( function(){
+					$( '<option>' )
+						.attr('value', $(this).attr('rate') )
+						.html( $(this).attr('currency') )
+						.appendTo( '#currency' );
+				} );
+
+			}
+		});
+	} // getECB
+
+	$( document ).ready( getECB );
+
+	var calc = function() {
+		var ein = $( '#eingabe' ).val() * 1;
+		var rate = $( '#currency' ).val() * 1;
+		var result = Math.round( ein*rate*100 ) / 100;
+		if ( isFinite( result ) ) {
+			$( '#ergebnis' ).html( result );
+
+		} else {
+			$( '#ergebnis' ).html( '' );
+		}
+	}
+
+	var getFlag = function() {
+		$.ajax({
+			url:'http://wifi.1av.at/507/getflag.php',
+			method:'POST',
+			data:{ currency: $('#currency option:selected').html() },
+			//data:{ currency: $('option', this).is(':selected').html() },
+			dataType:'json',
+			success:function(data) {
+				if ( typeof data.error != 'undefined' ) {
+					alert( data.error );
+				}
+				if ( data.flag != undefined ) {
+					$( '#ergebnis + img' ).remove();
+					$( '<img>' )
+						.attr('src', data.flag )
+						.insertAfter( '#ergebnis' )
+						.css({'max-height':20});
+
+				}
+			}
+		})
+	}
+
+	$( document ).on( 'change','#currency', calc );
+	$( document ).on( 'change','#currency', getFlag );
+
+	$( document ).on( 'change blur','#eingabe', calc );
+
+ }());
+	</script>
+	<style>
+	html, input, select { font-size:20px; font-family:Arial;}
+	input { width:80px; }
+	</style>
+</head>
+<body>
+EURO <input type="text" id="eingabe"> umrechnen in
+<select id="currency">
+	<option>bitte wählen...</option>
+</select>
+<strong id="ergebnis"></strong>
+
+</body>
+</html>

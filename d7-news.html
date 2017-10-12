@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+;(function() {
+	"use strict";
+	var news = [];
+	var news_loader = [];
+
+	var getNews = function() {
+		$.ajax({
+			url:'http://wifi.1av.at/507/news.php',
+			method:'GET',
+			success:function(data) {
+				$('.stories h2', data).each( function() {
+				//$('h1', data).each( function() {
+					if ( !$(this).parent().hasClass( 'topic' ) ) {
+							news_loader.push( $(this).html() )
+					}
+				});
+				showNews();
+			}
+		});
+		setTimeout( getNews, 60000 );
+	} // getNews
+
+	var showNews = function() {
+		var i, countnew = 0, ul = $( '<ul>' ), classN;
+		for ( i in news_loader ) {
+			if ( news_loader[i] != news[i] ) {
+				countnew++;
+				classN = 'new';
+			} else {
+				classN = '';
+			}
+			news[i] = news_loader[i];
+			$( '<li>' ).addClass( classN ).html( news[i] ).appendTo( ul );
+		}
+		news_loader=[];
+		if ( countnew > 0 ) {
+			$( '#news' ).empty().append( ul );
+		}
+	}
+
+	$( document ).ready( getNews );
+
+ }());
+	</script>
+	<style>
+	html { font-size:1.5em; font-family:Arial;}
+	#news {  font-size:0.6em; }
+	li { background:#fff; margin:0.15em 0; }
+	.new { background:#ff6; animation:fader 10s forwards; }
+	@keyframes fader {
+		0% { background:#fff; }
+		1% {background:#ff6; }
+		90% {background:#ff6; }
+		100% { background:#fff; }
+	}
+	</style>
+</head>
+<body>
+<h1>aktuelle News</h1>
+<p>alle 60 Sekunden wird nach neuen Meldungen gesucht...</p>
+<div id="news">
+
+</div>
+</body>
+</html>

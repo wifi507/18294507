@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+;(function() {
+	"use strict";
+	var getPlaces = function(plz, data ) {
+		console.log( '------ PLZ '+plz+' ------')
+		var datensatz = $( 'element:nth-child(5):contains('+plz+')', data ).parent();
+		var items = $( 'element:nth-child(2)', datensatz );
+		if ( items.length == 0 ) {
+			console.log( '///nothing found///' );
+		} else {
+			items.each(function() {
+					console.log( $(this).html() );
+			});
+		}
+	}
+	$.ajax({
+		url:'http://wifi.1av.at/507/getplz.php',
+		method:'GET',
+		data:{xml:true},
+		success:function(data) {
+			data = $.parseXML( data );
+			getPlaces(1180, data);
+			getPlaces(1234, data);
+			getPlaces(2443, data);
+		}
+
+	})
+
+}());
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+
+
+</body>
+</html>

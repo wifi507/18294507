@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+;(function() {
+	"use strict";
+
+	//http ://wifi.1av.at/507/r_get_html.php
+
+	// GET-Parameter, Response-HTML/TEXT
+	// Parameter "x"
+	$( document ).on( 'click', '#btn1', function() {
+		var x = $( '#x' ).val();
+		//Request ...
+		$.ajax({
+			url:'http://wifi.1av.at/507/r_get_html.php',
+			method:'GET',
+			data:{x:x},
+			success:function( responsedata ) {
+				var response;
+				response = JSON.parse( responsedata );
+				console.log( 'GET>HTML', response.x );
+			}
+		});
+		$.ajax({
+			url:'http://wifi.1av.at/507/r_post_html.php',
+			method:'POST',
+			data:{x:x},
+			//dataType:'html',
+			success:function( responsedata ) {
+				var response;
+				response = JSON.parse( responsedata );
+				console.log( 'POST>HTML', response.x );
+			}
+		});
+		$.ajax({
+			url:'http://wifi.1av.at/507/r_post_json.php',
+			method:'POST',
+			data:{x:x},
+			dataType:'json', // Angabe nicht notwendig!
+			success:function( responsedata ) {
+				/*var response;
+				response = JSON.parse( responsedata );*/
+				console.log( 'POST>JSON', responsedata.x );
+			},
+			error:function(){
+
+			},
+			complete:function() {
+
+			}
+		});
+
+		//$.ajax({...}).done( function() { } );
+		//$.post()
+		//$.getJSON()
+
+		$.ajaxSetup({
+			method:'POST',
+			timeout:500
+		});
+
+		$.ajax({
+			url:'http://wifi.1av.at/507/r_json_json.php',
+			method:'POST',
+			data:JSON.stringify({x:x}),
+			contentType:'application/json',
+			dataType:'json', // Angabe nicht notwendig!
+			success:function( responsedata ) {
+				/*var response;
+				response = JSON.parse( responsedata );*/
+				console.log( 'JSON>JSON', responsedata.x );
+			}
+		});
+		$.ajax({
+			url:'http://wifi.1av.at/507/r_get_jsonp.php',
+			method:'GET',
+			data:{x:x},
+			dataType:'jsonp',
+			jsonpCallback:'nameOfCallbackFunction',
+			success:function( responsedata ) {
+				console.log( 'GET>JSONP', responsedata.x );
+			}
+		});
+
+	});
+
+}());
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<input type="text" id="x"><br>
+<button id="btn1">Absenden</button>
+
+</body>
+</html>

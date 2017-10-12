@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+;(function() {
+	"use strict";
+	window.randy = function(a,b) { return Math.floor( Math.random()*(b-a+1) ) + a; }
+	/*$( document ).ready( function() {
+		$( '#btn' ).on( 'click', function() {} )
+
+	}); // dom ready end*/
+	var wuerfel = [ 0, 0, 0, 0, 0 ];
+
+	$( document ).on( 'click', '#btn', function() {
+		//$( '#ausgabe' ).empty();
+		var i, zufall, div = $( '<div>' ).appendTo( '#ausgabe' );
+		var klickAufBild;
+		for ( i in wuerfel ) {
+			zufall = wuerfel[i] == 0 ? randy(1,6) : wuerfel[i];
+			//wuerfel[i] = 0; // germerkte Werte resetten
+			(function(z,index) {
+				klickAufBild = function() {
+					$( this ).toggleClass( 'fixiert' );
+					wuerfel[ index ] = $(this).hasClass( 'fixiert') ? z : 0;
+				}
+			}(zufall,i)); // iife
+
+				$( '<img>' )
+					.addClass( wuerfel[i]!=0 ? 'fixiert' : '' )
+					.attr({
+						src:'d2-res/wuerfel/wuerfel'+zufall+'cols5.jpg'
+					})
+					.appendTo( div )
+					.on( 'click', klickAufBild ); // click img
+
+		} // for
+
+	}); // click #btn
+
+
+
+}());
+	</script>
+	<style>
+	div > div { padding:20px; border-bottom:1px solid #ccc; }
+	div > div > img { margin:5px; border:1px solid transparent; }
+	button { font-size:3em; }
+	.fixiert { border-color: red; }
+	</style>
+</head>
+<body>
+<button id="btn">würfeln</button>
+<div id="ausgabe">
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+;(function() {
+	"use strict";
+
+	var orte = {};
+	var plz = {}
+
+
+	$.ajax({
+		url:'http://wifi.1av.at/507/getplz.php',
+		method:'GET',
+		data:{xml:true},
+		success:function(data) {
+			data = $.parseXML( data );
+			$( 'datensatz > element:nth-child(2)', data ).each( function() {
+				var ortBezeichnung = $(this).html();
+				var ortPLZ = $(this).next().next().next().html();
+				//var ortPLZ = $(this).nextAll().eq(2).html();
+				if ( typeof orte[ ortPLZ ] != 'object' ) {
+					orte[ ortPLZ ] = [];
+				}
+				orte[ ortPLZ ].push(ortBezeichnung);
+
+				if ( typeof plz[ ortBezeichnung ] != 'object' ) {
+					plz[ ortBezeichnung ] = [];
+				}
+				plz[ ortBezeichnung ].push(ortPLZ);
+
+			});
+
+
+
+		}
+	}); //ajax
+
+$( document ).ready( function() {
+
+});
+
+$.ajax( {
+	url:'http://api.zippopotam.us/at/2443',
+	success:function(data) { console.log( data ); }
+
+})
+
+
+}());
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+
+
+</body>
+</html>
