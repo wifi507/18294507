@@ -75,3 +75,36 @@ Beispiele/Übungen
 Beispiele/Übungen
 - jQuery Plugins
 - Würfelspiel
+
+### TAG7 (11.10.2017, C513)
+- Funktionalität
+  * Client/Server mit AJAX
+  * XML, JSON, JSONP
+  * CORS
+- jQuery
+  * AJAX
+
+Beispiele/Übungen
+- Würfelspiel
+
+### TAG8 (12.10.2017, C513)
+- Funktionalität
+  * Wiederholung/Vertiefung AJAX
+
+Beispiele/Übungen
+- Währungsrechner
+- Postleitzahlen
+
+### TAG9 (18.10.2017, C513)
+-	JS Sprachkern
+  * OOP, Konstruktur-Funktionen, Prototype
+
+Beispiele/Übungen
+- Fahrrad
+
+### TAG10 (19.10.2017, C513)
+- Funktionalität
+  * Wiederholung/Vertiefung AJAX, OOP
+
+Beispiele/Übungen
+- Quiz

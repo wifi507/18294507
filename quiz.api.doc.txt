@@ -1,0 +1,57 @@
+URL: http://wifi.1av.at/507/q.php
+Request-Methode: POST
+Response-Typ: JSON
+Charset: UTF-8
+
+1) Frage vom Server laden
+REQUEST
+'anfrageart': 'neuefrage' (STRING)
+'level': 0-4 (INTEGER)
+
+RESPONSE
+{
+'frageid': (INTEGER)
+'frage': (STRING)
+'antworten': [ {
+    antwortid: INTEGER,
+    text: STRING
+  } ] (ARRAY mit 4xAntwort-Objekten)
+}
+
+2) Überprüfe Antwort
+REQUEST
+'anfrageart': 'überprüfeantwort' (STRING)
+'frageid': (INTEGER)
+'antwortid': (INTEGER)
+
+RESPONSE
+{
+'richtig': (BOOLEAN)
+'richtigid': (INTEGER)
+}
+
+
+3) Highscore übermitteln
+REQUEST
+'anfrageart': 'highscore' (STRING)
+'name': (STRING)
+'punkte': (INTEGER)
+'anzahl': (INTEGER, -1 === alle)
+
+RESPONSE
+{
+  'bestenliste': [
+    {
+      'name':(STRING)
+      'punkte':(INTEGER)
+    }
+  ] (ARRAY aus Einträgen)
+}
+
+
+FEHLER Meldungen
+RESPONSE
+{  error: 'Level enthält keine Fragen.' }
+{  error: 'Frage ID existiert nicht.' }
+{  error: 'Name und/oder Punkte fehlen.' }
+{  error: 'Unbekannte Anfrageart.' }

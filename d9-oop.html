@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+	<title>OOP</title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+// Objekte
+var o = {
+	farbe:'rot',
+	fahren:function() {
+			K('blau',200);
+	}
+};
+
+// Konstruktor-Funktion
+var farbe = 'alles ist schwarz';
+var farbeAusgabe = function() {
+	console.log( 'Das Fahrrad ist: ' + this.farbe);
+}
+
+var K = function(a,b) {
+
+  this.farbe = a;
+	this.preis = b;
+	this.textFahrrad = function() {
+		console.log( 'Das Fahrrad kostet: ' + this.preis);
+	}
+	this.farbeAusgabe = farbeAusgabe;
+	console.log( this );
+	// kein return !
+}
+
+/*
+K('rot',100);
+o.fahren();
+$(document).on( 'click', 'button', K );
+*/
+
+var oK = new K('rot',100);
+var oK2 = new K( 'blau', 200);
+
+oK.preis = 150;
+oK.textFahrrad();
+oK.farbeAusgabe();
+farbeAusgabe();
+
+
+// Prototype
+var S = function( a ) {
+	var konto = 0;
+	this.x = a;
+	this.y = 2;
+	this.machGeld = function( i )  {
+		if ( i < 0 ) return;
+		konto+=i;
+	}
+	this.kaufen = function() {
+		konto = 0;
+	}
+	this.add = function() { return a + this.y; }
+	this.toString = function() { return 'huhu'; }
+}
+
+var mathe = new S(5);
+var test = new S(1);
+//mathe.x = 5;
+console.log( 'add', mathe.add() );
+
+S.prototype.multiply = function() {
+	return this.x * this.y;
+}
+
+S.prototype.z = 100;
+
+console.log( 'multiply', mathe.multiply() );
+
+console.log( mathe.toString() )
+
+console.log( test.multiply() )
+
+console.log( mathe.z, mathe.hasOwnProperty( 'z' ) )
+
+mathe.z = 50;
+console.log( mathe.z, mathe.hasOwnProperty( 'z' )  );
+/*
+Array.prototype.pushOnlyNumber = function( i ) {
+	if ( isFinite( i ) ) this.push( i );
+}
+Array.prototype.delete = function( i ) {
+	this.splice( i, 1);
+}
+*/
+/*
+Array.prototype.push = function( i ) {
+	if ( isFinite( i ) ) this[this.length] = i;
+}
+
+console.log( a );
+*/
+var a = [];
+a.push( 1 );
+a.push( 'a' );
+console.log( a );
+$(document).on( 'click', 'button', K );
+
+var o = {
+	x: {
+		m:function() { }
+	}
+}
+console.log( '---- jQuery Methode ---- ');
+var f = function() {
+	console.log( 'gebinded', this )
+}
+
+ f(); // window
+  f.bind( {} )();
+f = f.bind( {} )
+ f();// Object
+
+ $.fn.m = function(ende) {
+ 	console.log( this );
+ 	if ( !ende ) $.fn.m.apply( this, [true] );
+ }
+
+ $( document ).ready( function() {
+ 	$( 'button' ).m( false );
+ });
+
+ var L;
+;(function() {
+	var geheim = 0;
+	L = function() {
+
+
+
+		/*this.m = function() { alert( this.x) };*/
+	}
+	L.prototype.x = 1;
+	L.prototype.y = 1;
+	L.prototype.z = 1;
+	L.prototype.m = function() { alert( this.x) };
+}());
+
+//var i1 = new L();
+//var i2 = new L();
+
+i1.x = 2;
+
+i2.y = 2;
+i2.z = 2;
+
+console.log( i1.x, i1.y, i1.z, i1 );
+
+i1.m();
+i2.m();
+
+var G = function() {
+	this.x = 1;
+	this.m = function() { console.log( this.x ); }
+}
+
+var g = new G();
+
+
+var H = function() {
+}
+H.prototype.m = function() { console.log( this.x );  }
+
+var h = new H();
+h.x = 1;
+
+//console.log( g.x, h.x );
+
+
+
+G.prototype.m = function() { alert(this.x); }
+
+g.m();
+h.m();
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<button>Klick mich</button>
+
+</body>
+</html>

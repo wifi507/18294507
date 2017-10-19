@@ -1,0 +1,25 @@
+1) Quiz
+Fertigstellen des Beispieles Quiz lt. Schnittstelle.
+http://wifi.1av.at/507/q.php
+
+
+2) Fluglotsensimulator (Übung5 - Praxis/Prüfung)
+Auf einem "Spielfeld" (zB 400x400 Pixel) sind 4 Flughäfen platziert.
+Alle 3-5 Sekunden startet ein Flugzeug von einem Flughafen (Zufall).
+Jedes Flugzeug hat einen bestimmten Zielflughafen.
+
+Flugzeuge sind selektierbar (Klick) und können danach (Klick auf
+Karte) in eine neue Richtung gelenkt werden.
+
+Flugzeuge werden als Grafik dargestellt, zeigt in die Richtung, in
+die es fliegt!
+
+Ziel ist es möglichst viele Flugzeuge zum Ziel zu bringen ohne dass
+zwei Flugzeuge zusammenstossen (GameOver)
+
+Grafiken im Ordner "airplane".
+
+Zusatzaufgabe:
+- Highscore (Anzahl erfolgreicher Landungen)
+- Geschwindigkeit des FLugzeuges veränderbar
+- unterschiedliche Schwierigkeitsstufen (mehr Flughäfen, etc.)

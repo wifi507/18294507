@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+	<title>Quiz Duellierung</title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+;(function($){
+	"use strict";
+
+	$.ajaxSetup({
+		url:'http://wifi.1av.at/507/q.php',
+		method:'POST',
+		dataType:'json'
+	});
+
+	Array.prototype.shuffle = function() {
+	}
+
+	//var Quiz = function() {
+	var quiz = {
+		name:'',
+		punkte:0,
+		level:0,
+		frageid:0,
+		maxpunkte:10100,
+		timeout:0,
+		timer:function() {
+			quiz.maxpunkte-=100;
+			$( 'progress' ).attr('value', quiz.maxpunkte );
+			if ( quiz.maxpunkte == 0 ) {
+				quiz.naechsteFrage();
+			} else {
+				quiz.timeout = setTimeout( quiz.timer, 100 );
+			}
+		},
+		highscore:function() {
+			console.log( 'sende Punkte und Name an Server' );
+			console.log( quiz.name, quiz.punkte );
+		},
+		naechsteFrage:function() {
+			quiz.level++;
+			if ( quiz.level > 4 ) {
+				quiz.highscore();
+			} else {
+				quiz.maxpunkte = 10100;
+				quiz.ladeFrage()
+			}
+		},
+		laedt:function() {
+			$( '#loading' ).show();
+			$( 'form, #frage' ).hide();
+		},
+		checkAntwort:function() {
+			$( '#frage button' ).off( 'click' );
+			clearTimeout( quiz.timeout );
+			$.ajax({
+				data:{
+					anfrageart:'überprüfeantwort',
+					frageid:quiz.frageid,
+					antwortid: $(this).data('antwortid')
+				},
+				context:this,
+				success:function( response ) {
+					$(this).css({
+						background: response.richtig ? 'green':'red'
+					});
+					if ( response.richtig ) {
+						quiz.punkte += quiz.maxpunkte;
+					}
+					setTimeout( function(){
+						quiz.naechsteFrage();
+					} , 2000 );
+				}
+			});
+		},
+		ladeFrage:function() {
+			this.laedt();
+			$.ajax({
+				data:{
+					anfrageart:'neuefrage',
+					level:this.level
+				},
+				success:function( data ){
+					setTimeout( function() {
+						$( '#loading' ).hide();
+						$( '#frage' ).show();
+						$( '#frage h1').html( data.frage );
+						data.antworten.shuffle();
+						quiz.frageid = data.frageid;
+						for ( var i in data.antworten ) {
+							$( '#frage button' ).eq(i).html(
+								data.antworten[i].text
+							).data('antwortid',data.antworten[i].antwortid )
+							.css({background:''})
+							.on('click', quiz.checkAntwort );
+						};
+						quiz.timer();
+					},2000 );
+				}
+			})
+		}
+
+	}
+	//var quiz = new Quiz();
+
+	$( document ).on( 'click', '#start', function( event ) {
+		event.preventDefault();
+		quiz.name = $('#deinname').val();
+		quiz.ladeFrage();
+	});
+
+
+
+
+
+
+		$( document ).on( 'focus', '#deinname', function( event ) {
+			$( '#bg' ).addClass( 'zoomHim' );
+		});
+
+
+
+}(jQuery));
+	</script>
+	<style>
+
+	html, body { height:100%; padding:0; margin:0; }
+	body { overflow:hidden; }
+	#bg { filter: blur(0px); transform:scale(1); transition:transform 30s, filter 5s; position:absolute; z-index:-1; top:0; left:0; right:0; bottom:0; background:url(http://orf.at/static/images/site/news/20150939/millionenshow_15_jahre_body_assinger_a.4644228.jpg); background-size:cover; }
+	#bg.zoomHim { transform:scale(2);  filter: blur(10px); }
+	#wrapper {  display:flex; justify-content: center; align-items:center;
+		height:100%;}
+	form { text-align:center; }
+	#deinname { display:block; margin:0 auto; }
+	#frage,#loading { display:none; }
+	#frage { text-align:center; }
+	#frage button { font-size:2em; }
+	</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="wrapper">
+	<form method="post" action="?">
+		<label>Dein Name</label>
+		<input type="text" id="deinname">
+		<button id="start">Los geht's</button>
+	</form>
+	<div id="loading">
+		Frage wird geladen...
+	</div>
+	<div id="frage">
+			<h1 id="q"></h1>
+			<button></button>
+			<button></button><br>
+			<button></button>
+			<button></button><br>
+			<progress value="10000" max="10000"></progress>
+		</div>
+
+</div>
+</body>
+</html>
