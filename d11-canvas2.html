@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+
+var drawCheckBox = function( ctx, active, w ) {
+	if ( !active ) clearTimeout( ctx.animTimeout );
+	ctx.clearRect(0,0,50,50);
+	ctx.strokeStyle = '#000';
+	ctx.lineWidth = 1;
+	ctx.beginPath();
+	ctx.rect(5,5,39,39);
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.rect(0,0,49,49);
+	ctx.stroke();
+	if ( active ) {
+		w++;
+		ctx.beginPath();
+		ctx.moveTo(25-w,25-w);
+		ctx.lineTo(24+w,24+w);
+		ctx.moveTo(25-w,24+w);
+		ctx.lineTo(24+w,25-w);
+		ctx.stroke();
+		if ( w < 20 ) {
+			ctx.animTimeout = setTimeout( function() {
+				drawCheckBox( ctx, active, w );
+			},40);
+		}
+	}
+}
+
+var createBox = function( input ) {
+
+	var div = $( input )
+		.css({position:'absolute',zIndex:-1,opacity:1})
+		.wrap( $('<div>').css({display:'inline-block',position:'relative'}) )
+		.on('change',function() {
+			check = !check;
+			drawCheckBox(ctx,check,1);
+		})
+		.parent();
+
+	var check = false; var animation = false;
+	var ctx = $('<canvas width="50" height="50">').on('click',function(){
+		check = !check;
+		drawCheckBox(ctx,check,1);
+		$(input).prop('checked', check );
+	}).appendTo(div).get(0).getContext('2d');
+
+	ctx.translate(0.5, 0.5);
+	drawCheckBox(ctx,false);
+}
+
+$( document ).ready( function() {
+	$( 'input[type="checkbox"]').each( function() {
+			createBox(this);
+	})
+
+
+})
+	</script>
+	<style>
+
+	</style>
+</head>
+<body>
+<input type="checkbox" id="cb_agb">
+ <label for="cb_agb">AGB gelesen</label><br>
+<input type="checkbox" id="cb_n">
+ <label for="cb_n">Ich will keinen Newsletter nicht bekommen.</label><br>
+</body>
+</html>

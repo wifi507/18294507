@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready( function() {
+	var c = $( '#countdown' ).html() * 1;
+/*
+	var meinCountdown = function( x ) {
+		$( '#countdown' ).html( x-- );
+		//x--;
+		//$( '#countdown' ).html( --x );
+		if ( x >= 0 )
+			setTimeout( function() { meinCountdown(x) }, 1000 );
+	}
+	meinCountdown( c );*/
+
+ var meinCountdown = function( x, id, callback ) {
+	 var count = function() {
+		 $( '#'+id ).html( x-- );
+		 if ( x >= 0 )
+		 	setTimeout( count ,1000)
+		 else if ( typeof callback == 'function' )
+		  callback();
+	 }
+	 count();
+ }
+meinCountdown( c, 'countdown', function() {
+	meinCountdown( $('#countdown2').html()*1, 'countdown2', function() {
+		meinCountdown( 4, 'countdown3', function() {
+				$('#b1 div').css({color:'red'});
+		});
+
+	})
+});
+
+var counterEnde = 0;
+var callbackEnde = function() {
+	counterEnde++;
+	if ( counterEnde == 2 )
+		$('#b2 div').css({color:'red'});
+}
+meinCountdown(  $('#countdown4').html()*1, 'countdown4', callbackEnde);
+meinCountdown(  $('#countdown5').html()*1, 'countdown5', callbackEnde);
+
+/*var x = 1;
+var promi = new Promise( function(resolve, reject) {
+	if ( x == 1 ) resolve( 'OK' );
+	else reject( 'ERROR' );
+});
+promi.then( alert ).catch( console.log );*/
+
+var meinCountdownPromise = function(x, id) {
+	return new Promise( function( resolve, reject) {
+
+		var count = function() {
+ 		 $( '#'+id ).html( x-- );
+ 		 if ( x >= 0 )
+ 		 	setTimeout( count, 1000)
+ 		 else
+		  resolve();
+ 	 }
+	 if ( !( x>0 ) ) reject();
+	 else count();
+	});
+}
+
+var y = 3;
+meinCountdownPromise( y, 'countdown6' )
+	.then( function() { return meinCountdownPromise( y, 'countdown8' ); })
+	.then( function() { return meinCountdownPromise( y, 'countdown7' ); })
+	.then( function() { $('#b3 div').css({color:'red'}); })
+	.catch( function() { alert('Zahl nicht > 0'); });
+var y = 1;
+
+var p1 = meinCountdownPromise( 4, 'countdown9' );
+var p2 = meinCountdownPromise( 3, 'countdown10' );
+
+Promise.all([p1,p2]).then( function() {
+	$('#b4 div').css({color:'red'});
+} ).catch( function() { alert( 'all nix'); });
+
+});
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<div id="b1">
+	<div id="countdown">5</div>
+	<div id="countdown2">3</div>
+	<div id="countdown3"></div>
+</div>
+<hr>
+<div id="b2">
+	<div id="countdown4">6</div>
+	<div id="countdown5">3</div>
+</div>
+<hr>
+<div id="b3">
+	<div id="countdown6">3</div>
+	<div id="countdown7">3</div>
+	<div id="countdown8">3</div>
+</div>
+<hr>
+<div id="b4">
+	<div id="countdown9"></div>
+	<div id="countdown10"></div>
+</div>
+</body>
+</html>

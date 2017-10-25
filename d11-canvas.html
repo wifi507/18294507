@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready( function() {
+
+	/*$( '#c' )[0]
+	$( '#c' ).get(0)
+	document.getElementById( 'c' )*/
+
+	//$( '#c' ).attr({width:300});
+	//$( '#c' ).css({width:300});
+	var zeichneWas = function( farbe, x ) {
+		var ctx = $( '#c' ).get(0).getContext( '2d' );
+		ctx.clearRect(0,0,200,200);
+
+		ctx.fillStyle = '#e2e2e2';
+		ctx.fillRect(0,0,200,200);
+		ctx.fillStyle = farbe;
+		ctx.fillRect(0,0,40,40);
+
+		ctx.strokeStyle = '#000';
+		ctx.lineWidth = 10;
+		ctx.moveTo( 50, 150 );
+		ctx.lineTo( 150, 50 );
+		ctx.lineTo( 150, 150);
+		/*ctx.lineTo( 50,150 );*/
+		ctx.closePath();
+		ctx.fill();
+		ctx.stroke();
+
+
+		ctx.beginPath();
+		ctx.arc( x,175,20,0,2*Math.PI );
+		ctx.stroke();
+		//ctx.fill();
+		/*var image = new Image();
+		image.src = 'd2-res/bmi_tabelle.gif';
+		image.onload = function() {
+			ctx.drawImage( image, 100, 100);
+		}*/
+
+
+		var verlauf = ctx.createLinearGradient( 150, 150, 200, 200 );
+		verlauf.addColorStop(0,'red');
+		verlauf.addColorStop(1,'yellow');
+		ctx.fillStyle = verlauf;
+		ctx.fill();
+
+		ctx.font = '30px Arial';
+		ctx.lineWidth = 1;
+		ctx.strokeText( 'Hallo Welt', 50,50 );
+
+
+
+		/*setTimeout( function() {
+			zeichneWas( 'red', --x );
+		}, 40 );*/
+ }
+
+	zeichneWas( 'red', 175 );
+	$( '#c' ).on( 'click', function() {
+		zeichneWas( 'green', 175 );
+	});
+
+});
+	</script>
+	<style>
+	canvas { border:1px solid #000; }
+	</style>
+</head>
+<body>
+<canvas id="c" width="200" height="200" ></canvas>
+<!-- <img src="d2-res/bmi_tabelle.gif" width="496" height="301" style="width:100px; height:100px;"> -->
+</body>
+</html>

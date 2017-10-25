@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$.ajaxSetup({
+	url:'http://wifi.1av.at/507/promisetest.php', // number => x
+	type:'POST',
+	dataType:'json'
+});
+
+// multiply5, sub10
+var CalcX = function(z,multi) {
+	return function(x) {
+		return new Promise( function(resolve, reject ) {
+			$.ajax({
+				data:{number:x},
+				success:function( resp ) {
+					resolve(	multi ? resp.x * z : resp.x * 1 + z );
+				}
+			});
+		});
+	}
+};
+
+var add1 = CalcX(1);
+var add10 = CalcX(10);
+var sub2 = CalcX(-2);
+var multiply5 = CalcX(5,true);
+var sub7 = CalcX( -7 );
+var div2 = CalcX( 1/2, true );
+var div5 = CalcX( 1/5, true );
+
+div5( 100 )
+	.then( sub7 )
+	.then( multiply5 )
+	.then( add10 )
+	.then( alert ); // 75
+
+add1(5)
+	.then( add1 )
+	.then( add1 )
+	.then( function(result) { alert( result) })
+
+add10(3)
+	.then( multiply5 )
+	.then( sub2 )
+	.then( sub7 )
+	.then( add10 )
+	.then( console.log ); // 73
+
+</script>
+	<style>
+	</style>
+</head>
+<body>
+
+
+</body>
+</html>
