@@ -1,0 +1,15 @@
+1) Restful Webservice mit NodeJS
+Es soll ein Webservice erstellt werden, welches Daten verwaltbar macht
+GET > alle Daten abfragen
+GET mit ID > einen Datenpunkt abfragen
+POST > neue Daten speichern
+PUT mit ID > Datenpunkt verändern
+DELETE mit ID > Datenpunkt löschen
+
+Daten werden serverseitig als JSON gespeichert.
+
+Dazu wird eine Weboberfläche (Client) erstellt mit der man
+Quizfragen verwalten kann.
+
+Zusatzaufgabe:
+Beispiel Quiz greift direkt auf das neue Webservice zu
