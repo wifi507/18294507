@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready(function() {
+	var vx = 2;
+	var vy = 0.8;
+	var posx = 5;
+	var posy = 5;
+	$( '<a>' ).appendTo( '#map' );
+
+
+	var fly = function() {
+
+		posx += vx;
+		posy += vy;
+		var alpha = Math.sin(vx/vy);
+
+		if ( posx >= 195 || posx <= -5 ) {
+			vx *= -1;
+		}
+		if ( posy >= 195 || posy <= -5 ) {
+			vy *= -1;
+		}
+		if ( vx < 0 ) {
+			alpha += Math.PI;
+		}
+		$( 'a' ).css({
+			left:posx,
+			top:posy,
+			transform:'rotate('+alpha+'rad)'
+		});
+	}
+
+	setInterval( fly, 10 );
+
+});
+	</script>
+	<style>
+	#map { border:1px solid #000; width:200px; height:200px;
+	position:relative; }
+	a { position:absolute; /*border-radius:50%; background:red;*/ display:block;
+	width:20px; height:20px; background:url(airplane/black-plane.svg) 0 0;
+background-size:100% 100%; }
+	</style>
+</head>
+<body>
+<div id="map"></div>
+</body>
+</html>

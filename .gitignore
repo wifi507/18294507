@@ -1,1 +1,5 @@
 server/
+node_modules
+cmd.lnk
+package-lock.json
+test.bat
