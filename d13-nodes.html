@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready(function() {
+	//ohne jQuery
+	var elementX = document.getElementById( 'x' );
+	var arrayElementeY = document.getElementsByClassName( 'y' );
+	console.log( elementX );
+	console.log( arrayElementeY );
+	elementX.innerHTML = 'Hello';
+	$( elementX ).html( 'Hello' );
+	arrayElementeY[0].style.color = 'red';
+	arrayElementeY[1].style.color = 'red';
+	$( arrayElementeY ).css({color:'red'});
+
+	console.log( '----' );
+	//mit jQuery
+	var $elementX = $( '#x' );
+	var $arrayElementeY = $( '.y' );
+	console.log( $elementX );
+	console.log( $arrayElementeY );
+
+	$elementX.html( 'Huhu' );
+	$elementX.get(0).innerHTML = 'Huhu';
+ 	$arrayElementeY.css({color:'green'});
+	$arrayElementeY.get(0).style.color = 'green';
+	$arrayElementeY.get(1).style.color = 'green';
+	$arrayElementeY.eq(1).css({color:'blue'});
+	$( $arrayElementeY.get(1) ).css({color:'blue'});
+});
+
+
+var a = ['a','b','c'];
+var o = {a:1, b:2, c:3 };
+o.methode = function() { }
+
+Array.prototype.counter = function() {
+	return this.length;
+}
+
+for (var i=0; i<a.counter(); i++ ) {
+	console.log( a[i] );
+	console.log( 'keine Werte im Objekt mit i' )
+}
+
+for (var i in a ) {
+	if ( typeof a[i] == 'function' || typeof a[i] == 'object' ) continue;
+	console.log( a[i], o[a[i]] );
+}
+for (var i in o ) {
+	console.log( o[i] );
+}
+
+for (var i of a ) { //ES6
+	console.log( i );
+}
+
+a.forEach( function( i ) {
+	console.log( i );
+})
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<div id="x" class="y">Hallo</div>
+<div class="y">Welt!</div>
+</body>
+</html>

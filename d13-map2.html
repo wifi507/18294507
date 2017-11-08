@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?callback=machKarte">
+			</script>
+	<script>
+
+var karte;
+var machKarte = function() {
+	var mapOptions = {
+		center:{lat:0,lng:0},
+		zoom:3
+	}
+	karte = new google.maps.Map( $('#map').get(0),mapOptions );
+	karte.addListener( 'dragend', function() {
+		var lat = Math.round( karte.getCenter().lat()*1000 ) / 1000;
+		var lng = Math.round( karte.getCenter().lng()*1000 ) / 1000;
+		$( '#overlay div' ).html( 'Koordinaten: '+lat+'/'+lng );
+	});
+	var oM = JSON.parse( localStorage.getItem( 'myMarkers' ) );
+	marker = oM.marker;
+	for ( var i in marker ) {
+		createMarker( marker[i] );
+	}
+}
+
+var createCross = function() {
+	var ctx = $( '#cross' ).get(0).getContext('2d');
+	ctx.moveTo( 100, 0 );
+	ctx.lineTo( 100,200 );
+	ctx.moveTo( 0, 100 );
+	ctx.lineTo( 200, 100);
+	ctx.stroke();
+}
+
+var marker = [];
+var createMarker = function( ma ) {
+	var newMarker = new google.maps.Marker({
+		map:karte,
+		position:{lat:ma.lat,lng:ma.lng}
+	});
+	makePoly();
+	var info = new google.maps.InfoWindow({
+		content:'<p>'+ma.name+'</p>'
+	});
+	newMarker.addListener('click', function() {
+  	info.open(karte, newMarker);
+  });
+
+}
+
+var saveLocal = function() {
+	localStorage.setItem( 'myMarkers', JSON.stringify({
+		marker:marker
+	}));
+}
+
+var makePoly = function() {
+	var myPath = new google.maps.Polyline({
+		path: marker,
+		geodesic: true,
+		strokeColor: '#000000',
+		strokeOpacity: 1.0,
+		strokeWeight: 2
+	});
+	myPath.setMap(karte);
+}
+
+$( document ).ready( createCross );
+
+$( document ).on( 'submit', 'form', function(e) {
+		e.preventDefault();
+		var lat = karte.getCenter().lat();
+		var lng = karte.getCenter().lng();
+		var title = $('#overlay input').val();
+		if ( title == '' ) return;
+		$('#overlay input').val('');
+		var m = marker.push({
+			name:title,
+			lat:lat,
+			lng:lng
+		});
+		createMarker(marker[m-1]);
+		saveLocal();
+});
+
+$( document ).on( 'click', '#overlay a', function(e) {
+	e.preventDefault();
+	marker = [];
+	saveLocal();
+	top.location.reload();
+});
+
+	</script>
+	<style>
+	html, body, #map { width:100%; height:100%; padding:0; margin:0; }
+	/*#map { height:calc(100% - 50px );}*/
+	#overlay { background:rgba(0,0,0,0.5); position:fixed; left:calc(50% - 300px); top:0; right:calc(50% - 300px);; height:45px; padding:10px; border-radius:0 0 15px 15px; box-shadow:2px 2px 2px rgba(0,0,0,0.5); text-align:center; }
+	#overlay * { font-size:1.25rem; font-family:Arial;}
+	#overlay div { color:#fff; font-size:1rem;}
+	#overlay a { color:yellow; margin-left:10px; }
+	#cross { position:absolute; top:calc(50% - 100px); left:calc(50% - 100px); pointer-events:none; }
+	</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="overlay">
+	<form method="post"><input type="text" placeholder="Bezeichnung des Ortes" autocomplete="off"><button>Speichern</button><a href="#">alle löschen</a></form>
+	<div>Koordinaten 0/0</div>
+</div>
+<canvas id="cross" width="200" height="200"></canvas>
+</body>
+</html>

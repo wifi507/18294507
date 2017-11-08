@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+
+
+
+$( document ).ready( function() {
+	var l = 1;
+	//var int;
+	setInterval( function() {
+		var x = $( '<x>' ).css({left:l+=15,top:0}).on(
+			'click', function() {
+				clearInterval( this.int );
+			}
+		).appendTo( 'body' );
+		//x.get(0) === x[0]
+		x.get(0).int = setInterval( function() {
+			x.css({top:parseInt(x.css('top'))+1 });
+		}, 40 );
+	}, 1000 );
+
+
+});
+	</script>
+	<style>
+	x { position:absolute; display:inline-block; background:red; width:10px; height:10px; margin:5px; }
+	</style>
+</head>
+<body>
+
+</body>
+</html>

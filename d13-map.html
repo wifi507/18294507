@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?callback=machKarte">
+			</script>
+	<script>
+$( document ).ready( function() {
+	$( '#map' ).on( 'mouseenter', function() {
+		$( '.gmnoprint' ).fadeOut();
+	});
+	//alert( navigator.userAgent );
+	navigator.geolocation.getCurrentPosition( function(pos) {
+			var lat = pos.coords.latitude;
+			var lng = pos.coords.longitude;
+			var marker = new google.maps.Marker({
+				map:karte,
+				position:{lat:lat,lng:lng}
+			});
+			karte.setCenter({lat:lat,lng:lng} );
+			karte.setZoom(13);
+	});
+
+
+});
+var karte;
+var machKarte = function() {
+	var mapOptions = {
+		center:{lat:0,lng:0},
+		zoom:1
+	}
+	karte = new google.maps.Map( $('#map').get(0),mapOptions );
+
+
+
+}
+	</script>
+	<style>
+	#map {
+		width:400px;
+		height:300px;
+	}
+	</style>
+</head>
+<body>
+<div id="map"></div>
+</body>
+</html>

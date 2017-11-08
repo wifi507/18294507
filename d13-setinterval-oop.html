@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+var X = function( left ) {
+	this.left = left;
+	this.int = false;
+	this.top = 0;
+	this.x = false;
+	this.flying = false;
+	this.create();
+
+}
+X.prototype.create = function() {
+	this.x = $( '<x>' ).css({left:this.left,top:this.top}).on(
+		'click', function() {
+			if ( !this.flying ) { this.fly(); }
+			else {
+				this.flying = false;
+				clearInterval( this.int );
+			}
+		}.bind(this)).appendTo( 'body' );
+		this.fly();
+		X.prototype.fly = function() {
+}
+	this.flying = true;
+	this.int = setInterval( function() {
+		this.x.css({top:++this.top });
+	}.bind(this), 40 );
+}
+
+
+$( document ).ready( function() {
+	var l = 1;
+	//var int;
+	setInterval( function() {
+		new X( l+=10 );
+	}, 1000 );
+});
+	</script>
+	<style>
+	x { position:absolute; display:inline-block; background:red; width:10px; height:10px; margin:5px; }
+	</style>
+</head>
+<body>
+
+</body>
+</html>
