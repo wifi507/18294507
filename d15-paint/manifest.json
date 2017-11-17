@@ -1,0 +1,21 @@
+{
+  "name":"Canvas Painter",
+  "version":"0.0.1",
+  "manifest_version":2,
+  "minimum_chrome_version":"36",
+  "description":"Scribble dir was und speichere es ab!",
+  "icons":{"256":"icon_256.png"},
+  "app":{
+      "background": {
+        "scripts":["background.js"]
+      }
+  },
+  "permissions":[
+     { "fileSystem": [ "write" ] }
+  ],
+  "file_handlers": {
+    "image": {
+      "types": [ "image/jpg", "image/png"]
+    }
+  }
+}

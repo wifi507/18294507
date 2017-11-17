@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mobile Paint</title>
+<style>
+* { margin:0; padding:0; }
+ul { list-style:none; position:relative; z-index:2; }
+li { float:left;  }
+ul a { color:#000000; text-decoration:none; border:1px solid #000; height:20px; padding:5px; display:block; }
+canvas { vertical-align:bottom; }
+#overlay { position:absolute; top:0; left:0; bottom:0; right:0; background:rgba(0,0,0,0.9); display:none; overflow:auto; padding:20px; }
+#overlay img { height:200px; margin:10px; background:#fff; }
+</style>
+<script src="jquery-3.2.1.min.js"></script>
+<script src="application.js"></script>
+<script src="myFileHandler.js"></script>
+</head>
+
+<body>
+<div id="canvaswrapper"></div>
+<div id="overlay"></div>
+<ul id="buttons">
+	<li><a href="#" data-btn="color" data-color="#000000"></a></li>
+	<li><a href="#" data-btn="color" data-color="#3336CC"></a></li>
+	<li><a href="#" data-btn="color" data-color="#325511"></a></li>
+	<li><a href="#" data-btn="color" data-color="#00FF00"></a></li>
+	<li><a href="#" data-btn="color" data-color="#0000FF"></a></li>
+	<li><a href="#" data-btn="color" data-color="#FFFF00"></a></li>
+	<li><a href="#" data-btn="color" data-color="#FF00FF"></a></li>
+	<li><a href="#" data-btn="color" data-color="#00FFFF"></a></li>
+	<li><a href="#" data-btn="clear">CLEAR</a></li>
+	<li><a href="#" data-btn="save">SAVE PNG</a></li>
+	<li><a href="#" data-btn="save2">SAVE JPG</a></li>
+</ul>
+
+</body>
+</html>

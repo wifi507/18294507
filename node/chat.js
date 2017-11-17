@@ -16,6 +16,7 @@ io.on( 'connection', function( socket ) {
 
   console.log( 'Neuer Benutzer ist da.' );
   socket.on( 'shout', function(data) {
+    // data to database
     io.emit( 'servershout', data );
   });
 });

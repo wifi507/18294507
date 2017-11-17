@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+ //"use strict";
+
+var tier = {
+	beine:4,
+	removeBein : function() {
+		this.beine--;
+	}
+}
+var elefant = Object.create( tier );
+var hund = Object.create( tier );
+var spinne = Object.create( tier );
+spinne.beine = 8;
+spinne.removeBein();
+tier.removeBein();
+spinne.removeBein();
+console.log( elefant.beine, hund.beine, spinne.beine );
+
+var mann = {
+	vorname:'Max',
+	nachname:'Muster',
+	alter:33,
+	makeOlder:function() {
+		this.alter++;
+	}
+}
+
+var person = Object.create( {}, {
+	vorname:{
+		value:'Max',
+		writable:true,
+		enumerable:true
+	},
+	nachname:{
+		value:'Muster',
+		writable:true,
+		enumerable:true
+	},
+	alter:{
+		//value:33,
+		//writable:true,
+		enumerable:true,
+		get:function(){
+			return this.vorname + ' ist ' + this.blabla + 'alt.';
+		},
+		set:function( value ) {
+			if ( isNaN( value ) ) return;
+			this.blabla = Math.floor( value );
+		}
+	},
+	fullName: {
+		get:function() {
+			return this.vorname+ ' ' + this.nachname;
+		}
+	},
+	makeOlder:{
+		value:function() { this.alter++; },
+		enumerable:false
+	}
+});
+
+mann.vorname = 'Thomas';
+person.vorname = 'Georg';
+
+console.log( mann.vorname, person.vorname );
+
+person.alter = 33.9;
+person.alter = 'weiss nicht';
+//alert( person.alter );
+
+for ( var i in mann ) { console.log( i, mann[i] ); }
+for ( var i in person ) { console.log( i, person[i] ); }
+
+person.alter++;
+
+console.log( person.alter );
+
+person.vorname = 'Markus';
+person.fullName = 'Hallo Welt';
+
+console.log( person.fullName );
+
+
+var Circle = function( radius ) {
+	this.radius = radius;
+}
+
+Object.defineProperty( Circle.prototype, 'umfang', {
+	get:function() {
+		return 2*Math.PI*this.radius;
+	},
+	set:function(u) {
+		this.radius = u / 2 / Math.PI;
+	}
+});
+
+Object.defineProperty( Circle.prototype, 'flaeche', {
+	get:function() {
+		return Math.PI*this.radius*this.radius;
+	}
+});
+
+var kreis = new Circle(5);
+kreis.umfang = 20;
+//alert( 'Radius: ' + kreis.radius );
+//alert( 'Umfang: ' + kreis.umfang );
+
+//alert( kreis.test );
+
+// ES6
+const x = 5;
+for ( let j=0; j < 3; j++ ) {
+	console.warn( j );
+}
+
+var test = function( wert ) { return wert+1; }
+var neue = function( j, callback ) {
+	return  callback(j);
+}
+console.log( neue(5,test) );
+console.log( neue(5,( v=>v+1 ) ) );
+
+var toNumber = x => x*1;
+
+var randy = (min,max) => Math.floor( Math.random() * (max-min+1) ) + min;
+var _e = id => document.getElementById( id );
+
+console.log( toNumber( '123' ) );
+console.log( randy(1,15) );
+
+class Tier {
+	constructor( gewicht = 0 ) {
+		var p = gewicht+'kg';
+		this.kg = gewicht;
+		this.t = this.kg2T();
+		this.wieschwer = function() {
+			return p;
+		}
+	}
+	static kg2t( kg ) {
+		return kg/1000;
+	}
+}
+
+class Wurm extends Tier {
+
+	 constructor( gewicht = 0, farbe = 'pink' ) {
+		 super( gewicht ); // constructor TIER
+		 //delete this.t;
+		 //this.t = null;
+		 this.farbe = farbe;
+
+
+
+	 }
+	 get t() { return this.kg2T(); }
+	 get hasLegs() { return false };
+}
+
+
+var Elefant = function( gewicht ) {
+	var privateVar = gewicht+'kg';
+	this.kg = gewicht;
+	this.t = this.kg/1000;
+	this.wieschwer = function() {
+		return privateVar;
+	}
+}
+
+var dumbo = new Elefant( 5000 );
+
+alert( dumbo.wieschwer() );
+
+Tier.prototype.kg2T = function() {
+	return this.kg/1000;
+}
+
+var sumsi = new Tier( 500 );
+console.log( 'sumsi', sumsi.kg, sumsi.t );
+alert( sumsi.wieschwer() );
+
+Wurm.prototype.eat = function() {
+	//delete this;
+}
+
+//alert( Tier.kg2t( 1500 ) );
+
+var seppl = new Wurm();
+console.log( seppl.hasLegs, seppl.kg, seppl.t, seppl.kg2T() );
+
+console.log( 't' in seppl );
+
+seppl.eat();
+//delete seppl;
+console.log( seppl );
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+
+</body>
+</html>

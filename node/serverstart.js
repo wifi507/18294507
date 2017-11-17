@@ -1,7 +1,7 @@
 var fs = require( 'fs' );
 var cp = require( 'child_process' );
 
-var serverFile = 'chat.js';
+var serverFile = 'd14-error.js'; // chat.js
 
 var server = cp.fork( serverFile );
 console.log( 'Server Script gestartet.' );

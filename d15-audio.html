@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="d15-res/uislider/jquery-ui.min.js"></script>
+	<script>
+var allAudio = ['drums.mp3','guitar.mp3','organ.mp3','click.mp3'];
+$( document ).ready( function() {
+	for ( var i in allAudio ) {
+
+		$( '<div>')
+			.append(
+				$( '<input type="checkbox">').data('audio',i)
+			)
+			.append( $('<label>').html(allAudio[i]) )
+			.appendTo('#wrapper');
+
+		allAudio[i] = new Audio( 'av/'+allAudio[i] );
+		allAudio[i].volume = 0;
+		allAudio[i].muted = true;
+		allAudio[i].loop = true;
+	}
+
+	$( 'input[type="checkbox"]').on( 'change', function() {
+		allAudio[ $(this).data('audio') ].muted = !$(this).is(':checked');
+	});
+
+	$( '#slider' ).slider({
+		step:5,
+		slide:function(e,ui) {
+			for ( var i in allAudio ) {
+				allAudio[i].volume = ui.value / 100;
+			}
+			$( '#volume' ).html( Math.round(ui.value) + '%' );
+
+		}
+	});
+
+	$( '#sliderspeed' ).slider({
+		value:1,
+		min:0.5,
+		max:2,
+		step:0.1,
+		slide:function(e,ui) {
+			for ( var i in allAudio ) {
+				allAudio[i].playbackRate = ui.value;
+			}
+			$( '#speed' ).html( Math.round(ui.value*100) + '%' );
+		}
+
+	});
+
+	$( 'video') .get(0).playbackRate = 10;
+
+});
+$( document ).on( 'click', '.icon-play3', function() {
+	for ( var i in allAudio ) {
+		allAudio[i].play();
+	}
+});
+$( document ).on( 'click', '.icon-stop2', function() {
+	for ( var i in allAudio ) {
+		allAudio[i].pause();
+		allAudio[i].currentTime = 0;
+	}
+});
+$( document ).on( 'click', 'button', function() {
+	$( 'button' ).toggle();
+});
+	</script>
+	<link rel="stylesheet" href="d15-res/icomoon/style.css">
+	<link rel="stylesheet" href="d15-res/uislider/jquery-ui.min.css">
+	<link rel="stylesheet" href="d15-res/uislider/jquery-ui.theme.min.css">
+	<style>
+	button { background:transparent; border:none; font-size:3em; cursor:pointer; }
+	button span { font-family:Arial; }
+	.icon-stop2 { display:none; }
+	#wrapper { width:300px; margin:20px auto;}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+	<button class="icon-play3"><span>Play</span></button><button class="icon-stop2"><span>Stop</span></button>
+	<br>
+	Volume: <span id="volume">0%</span><br>
+	<div id="slider"></div>
+	<br>
+	Speed: <span id="speed">100%</span><br>
+	<div id="sliderspeed"></div>
+	<br>
+	<br>
+</div>
+
+<video controls>
+	<source src="av/Pitztaler Gletscher.mp4">
+	</video>
+
+</body>
+</html>

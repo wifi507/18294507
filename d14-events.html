@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+	/*
+		click
+		mousedown
+		mouseup
+		mousemove
+		mouseover
+		mouseout
+		mouseenter
+		mouseleave
+
+		click
+		touchstart
+		touchmove
+		touchend
+
+		deviceorientation
+		devicemotion
+
+		*/
+
+$( document ).ready( function() {
+	$( '#btn1' ).on( 'click', function(e) {
+		e.stopPropagation();
+		console.log( 'DOM ready, geklickt' );
+		//$( document ).off( 'click' );
+	});
+	$( '#wrapper' ).on( 'click', function(e) {
+			//e.stopPropagation();
+			console.log( 'wrapper geklickt' );
+	});
+	$( '#wrapper' ).on( 'click', '#btn1', function() {
+		console.log( 'geklickt' );
+	});
+
+	$( '#btn2, #btn1' ).on( 'tripleclick', function(e) {
+		console.log( 'Button 2, 3x geklickt');
+	});
+
+	$( '*' ).on( 'click', function(e) {
+		//console.log( this );
+		this.anzahlKlicks = this.anzahlKlicks || 0;
+		this.anzahlKlicks++;
+		if ( this.anzahlKlicks%3 == 0 ) {
+			$( this ).trigger( 'tripleclick' );
+		}
+	});
+
+	var startX = 0;
+
+	$( '#wrapper' ).on( 'touchstart', function(e) {
+		startX = e.originalEvent.targetTouches[0].clientX;
+		console.log( 'touch start');
+	});
+
+	$( 'div' ).on( 'touchend', function(e) {
+		if(startX - e.originalEvent.changedTouches[0].clientX > 100 ) {
+			$( this ).trigger( 'swipeleft' );
+		}
+		if(startX - e.originalEvent.changedTouches[0].clientX < -100 ) {
+			$( this ).trigger( 'swiperight' );
+		}
+		console.log( 'touch end');
+	});
+
+
+	$( '#wrapper' ).on( 'swipeleft', function() {
+		console.log( 'nach links gewischt' );
+	});
+	$( '#wrapper' ).on( 'swipeleft', function() {
+		console.log( 'nach rechts gewischt' );
+	});
+
+
+});
+
+
+
+
+
+	</script>
+	<style>
+	#wrapper { border:1px solid red; width:300px;}
+	#btn1 { position:relative; top:50px; }
+	#test { border:1px dotted green; width:400px; height:400px; }
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<button id="btn1">Klick mich</button>
+		<button id="btn2">Klick mich 3x</button>
+	</div>
+	<div id="test"></div>
+</body>
+</html>
